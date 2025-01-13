@@ -2,12 +2,22 @@ import { Helmet } from 'react-helmet-async'
 import AddPlantForm from '../../../components/Form/AddPlantForm'
 import useAuth from '../../../hooks/useAuth'
 import { imageUpload } from '../../../API/utils'
+import { useState } from 'react'
+import useAxiosSecure from '../../../hooks/useAxiosSecure'
+import toast from 'react-hot-toast'
 
 const AddPlant = () => {
     const {user} = useAuth()
+    const [uploadButtonText, setUploadButtonText] = useState({name: 'upload button'})
+    const [loading , setLoading] = useState(false)
+    const axiosSecure = useAxiosSecure()
+
+
+
     const handleSubmit = async e => {
+        setLoading(true)
         e.preventDefault()
-        const form = e.targal;
+        const form = e.target;
         const name = form.name.value;
         const description = form.description.value;
         const price = parseFloat(form.price.value);
@@ -17,14 +27,26 @@ const AddPlant = () => {
 
         // seller info
         const seller = {
-            name: user?.name,
+            name: user?.displayName,
             image: user?.photoURL,
             email: user?.email
         }
 
         // product infot with seller info==
-        const plantSeller = {
+        const plantData = {
             name, price, description, quantity, image: imageUrl, seller
+        }
+        console.log(plantData)
+
+        try{
+            axiosSecure.post('/plants', plantData)
+            toast.success('data added successfully')
+
+        }catch(error){
+            console.log(error.message)
+
+        }finally{
+            setLoading(false)
         }
     }
   return (
@@ -34,7 +56,8 @@ const AddPlant = () => {
       </Helmet>
 
       {/* Form */}
-      <AddPlantForm />
+      <AddPlantForm handleSubmit={handleSubmit} uploadButtonText={uploadButtonText} setUploadButtonText={setUploadButtonText} 
+      loading={loading}/>
     </div>
   )
 }
