@@ -3,7 +3,7 @@ import { FcGoogle } from 'react-icons/fc'
 import useAuth from '../../hooks/useAuth'
 import { toast } from 'react-hot-toast'
 import { TbFidgetSpinner } from 'react-icons/tb'
-import axios from 'axios'
+
 import { imageUpload } from '../../API/utils'
 
 const SignUp = () => {
@@ -21,7 +21,7 @@ const SignUp = () => {
     // const formData = new FormData()
     // formData.append('image', image)
     // console.log(formData)
-    const photoURL = imageUpload(image)
+    const photoURL = await imageUpload(image)
     
     // send img to imgbb ====
 //     const {data } = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`, formData)
