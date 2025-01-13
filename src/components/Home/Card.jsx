@@ -4,7 +4,7 @@ const Card = ({plant}) => {
     const {name, description, price, quantity, image, _id} = plant;
   return (
     <Link
-      to={`/plant/_id`}
+      to={`/plant/${_id}`}
       className='col-span-1 cursor-pointer group shadow-xl p-3 rounded-xl'
     >
       <div className='flex flex-col gap-2 w-full'>
@@ -34,9 +34,9 @@ const Card = ({plant}) => {
               top-3
               right-3
             '
-          ></div>
+          >{name}</div>
         </div>
-        <div className='font-semibold text-lg'>{name}</div>
+        <div className='font-semibold text-lg'>{description}</div>
         <div className='font-semibold text-lg'>Category: Indoor</div>
         <div className='font-semibold text-lg'>Quantity: {quantity}</div>
         <div className='flex flex-row items-center gap-1'>

@@ -1,6 +1,6 @@
 import { TbFidgetSpinner } from "react-icons/tb"
 
-const AddPlantForm = ({handleSubmit, uploadButtonText,setUploadButtonText, loading}) => {
+const AddPlantForm = ({handleSubmit, uploadImagePreview,setUploadImagePreview, loading}) => {
   return (
     <div className='w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50'>
       <form onSubmit={handleSubmit}>
@@ -89,7 +89,7 @@ const AddPlantForm = ({handleSubmit, uploadButtonText,setUploadButtonText, loadi
                 <div className='flex flex-col w-max mx-auto text-center'>
                   <label>
                     <input
-                    onChange={(e)=> setUploadButtonText(e.target.files[0])}
+                    onChange={(e)=> setUploadImagePreview({image: e.target.files[0], url: URL.createObjectURL(e.target.files[0])})}
                       className='text-sm cursor-pointer w-36 hidden'
                       type='file'
                       name='image'
@@ -98,7 +98,7 @@ const AddPlantForm = ({handleSubmit, uploadButtonText,setUploadButtonText, loadi
                       hidden
                     />
                     <div className='bg-lime-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-lime-500'>
-                {uploadButtonText.name
+                {uploadImagePreview.image?.name
                     
                 
                 }
@@ -109,10 +109,13 @@ const AddPlantForm = ({handleSubmit, uploadButtonText,setUploadButtonText, loadi
               </div>
             </div>
     {
-        uploadButtonText.size && (
-                    <p>image size : {uploadButtonText.size} Bytes</p>
+    uploadImagePreview    && uploadImagePreview.image?.size && ( <>
+    <img className="w-20" src={uploadImagePreview?.url} alt="" />
+    <p>image size : {uploadImagePreview.image?.size} Bytes</p></>
+        
         )
     }
+    
 
             {/* Submit Button */}
             <button
