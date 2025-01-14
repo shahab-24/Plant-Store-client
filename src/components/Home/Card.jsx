@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 const Card = ({plant}) => {
-    const {name, description, price, quantity, image, _id} = plant;
+    const {name, description, price, quantity, image, _id} = plant || {};  //if any data of this object msssing then it should not any error
   return (
     <Link
       to={`/plant/${_id}`}
