@@ -11,8 +11,8 @@ import LoadingSpinner from '../../components/Shared/LoadingSpinner'
 
 const PlantDetails = () => {
     const {id} = useParams()
-  let [isOpen, setIsOpen] = useState(false)
 
+  let [isOpen, setIsOpen] = useState(false)
 
   const {data: plant = [], isLoading, refetch} = useQuery({
     queryKey: ['plant', id],
@@ -46,7 +46,7 @@ const PlantDetails = () => {
           <div>
             <div className='w-full overflow-hidden rounded-xl'>
               <img
-                className={image}
+                src={image}
                 alt='header image'
               />
             </div>
@@ -104,12 +104,12 @@ const PlantDetails = () => {
           <div className='flex justify-between'>
             <p className='font-bold text-3xl text-gray-500'>Price: {price}$</p>
             <div>
-              <Button label={quantity < 0 ? "Out of stock" : "Purchase"} />
+              <Button onClick={() => setIsOpen(true)} label={quantity < 0 ? "Out of stock" : "Purchase"} />
             </div>
           </div>
           <hr className='my-6' />
 
-          <PurchaseModal closeModal={closeModal} isOpen={isOpen} />
+          <PurchaseModal plant={plant} closeModal={closeModal} isOpen={isOpen} />
         </div>
       </div>
     </Container>
