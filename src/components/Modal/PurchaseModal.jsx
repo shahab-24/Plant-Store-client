@@ -13,9 +13,9 @@ import toast from 'react-hot-toast'
 import Button from '../Shared/Button/Button'
 import useAxiosSecure from '../../hooks/useAxiosSecure'
 
-const PurchaseModal = ({ closeModal, isOpen, plant }) => {
+const PurchaseModal = ({ refetch,closeModal, isOpen, plant }) => {
     const {user} =useAuth()
-    const {name price, category, quantity,seller, _id} = plant
+    const {name, price, category, quantity,seller, _id} = plant;
     const axiosSecure = useAxiosSecure()
     const [totalQuantity, setTotalQuantity] = useState(1)
 const [totalPrice, setTotalPrice] =useState(price)
@@ -59,8 +59,16 @@ setTotalQuantity(value)
   const handlePurchase = async ()=> {
 
     try{
-        axiosSecure.post('/orders',purchaseInfo)
+        await axiosSecure.post('/orders',purchaseInfo)
+        
+
+        // update quantity filed==
+        await axiosSecure.patch(`/plants/quantity/${_id}`, {quantityToUpdate: totalQuantity})
+        refetch()
+
         toast.success('oreder created successfully')
+        
+
     } catch(err){
         console.log(err)
     } finally{
