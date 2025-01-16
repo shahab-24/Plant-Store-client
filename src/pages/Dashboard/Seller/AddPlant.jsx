@@ -23,6 +23,7 @@ const AddPlant = () => {
         const description = form.description.value;
         const price = parseFloat(form.price.value);
         const quantity = parseInt(form.quantity.value);
+        const category = form.category.value;
         const image = form.image.files[0]
         const imageUrl = await imageUpload(image)
 
@@ -35,7 +36,7 @@ const AddPlant = () => {
 
         // product infot with seller info==
         const plantData = {
-            name, price, description, quantity, image: imageUrl, seller
+            name, price, description, category, quantity, image: imageUrl, seller
         }
         console.log(plantData)
 

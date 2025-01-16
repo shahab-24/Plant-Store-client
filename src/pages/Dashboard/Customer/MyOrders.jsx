@@ -18,7 +18,7 @@ const MyOrders = () => {
                 
               })
               console.log(orders)
-              const {name, image, category, quantity, status} = orders;
+        //       const {name, image, category, quantity, status} = orders;
 
               if(isLoading) return <LoadingSpinner></LoadingSpinner>
         
@@ -83,7 +83,7 @@ const MyOrders = () => {
                 </thead>
                 <tbody>
                 {
-                        orders.map(orderData => <CustomerOrderDataRow orderData={orderData} key={orderData._id} />)
+                        orders.map(orderData => <CustomerOrderDataRow refetch={refetch} orderData={orderData} key={orderData._id} />)
                 }
                   
                 </tbody>
