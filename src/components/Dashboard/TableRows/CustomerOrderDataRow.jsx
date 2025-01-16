@@ -29,6 +29,7 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
         refetch()
     } catch (err) {
         console.log(err)
+        toast.error(err.response.data);
     } finally {
         closeModal()
     }
