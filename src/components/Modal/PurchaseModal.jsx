@@ -62,6 +62,7 @@ const PurchaseModal = ({ refetch, closeModal, isOpen, plant }) => {
       // update quantity filed==
       await axiosSecure.patch(`/plants/quantity/${_id}`, {
         quantityToUpdate: totalQuantity,
+        status: 'decrease'
       });
       refetch();
 

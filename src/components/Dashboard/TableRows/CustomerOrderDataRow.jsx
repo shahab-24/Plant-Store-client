@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import DeleteModal from "../../Modal/DeleteModal";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 
 // eslint-disable-next-line react/prop-types
@@ -10,11 +11,20 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
   const closeModal = () => setIsOpen(false);
   const axiosSecure = useAxiosSecure()
 
-  const { name, image, category, quantity, status, price , _id} = orderData;
+  const { name, image, category, quantity, status, price , _id, plantId} = orderData;
 
   const handleDelete = async () => {
     try {
-        await axiosSecure.delete(`/orders/${_id}`)
+        await axiosSecure.delete(`/orders/${_id}`)//order delete by order Id
+
+        // after deletion orders quantity will be added to its previous qantity added to its plantId
+        await axiosSecure.patch(`/plants/quantity/${plantId}`, {
+                quantityToUpdate: quantity,
+                status: 'increase'
+              });
+              refetch();
+        
+              toast.success("oreder cancelled successfully");
 
         refetch()
     } catch (err) {
