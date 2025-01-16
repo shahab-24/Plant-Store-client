@@ -1,7 +1,11 @@
 import { Helmet } from 'react-helmet-async'
 import UserDataRow from '../../../components/Dashboard/TableRows/UserDataRow'
+import useRole from '../../../hooks/useRole'
 
 const ManageUsers = () => {
+        const [role, isLoading] = useRole()
+        console.log(role)
+        
   return (
     <>
       <div className='container mx-auto px-4 sm:px-8'>
@@ -24,7 +28,7 @@ const ManageUsers = () => {
                       scope='col'
                       className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
                     >
-                      Role
+                      {role}
                     </th>
                     <th
                       scope='col'
