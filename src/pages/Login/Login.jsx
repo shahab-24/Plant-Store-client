@@ -10,8 +10,8 @@ const Login = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const from = location?.state?.from?.pathname || '/'
-  if (user) return <Navigate to={from} replace={true} />
   if (loading) return <LoadingSpinner />
+  if (user) return <Navigate to={from} replace={true} />
   // form submit handler
   const handleSubmit = async event => {
     event.preventDefault()
@@ -28,6 +28,7 @@ const Login = () => {
     } catch (err) {
       console.log(err)
       toast.error(err?.message)
+//       navigate('/')
     }
   }
 

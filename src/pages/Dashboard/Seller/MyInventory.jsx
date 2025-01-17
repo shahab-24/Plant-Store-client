@@ -1,8 +1,29 @@
 import { Helmet } from 'react-helmet-async'
 
 import PlantDataRow from '../../../components/Dashboard/TableRows/PlantDataRow'
+import { useQuery } from '@tanstack/react-query'
+import toast from 'react-hot-toast'
+import useAxiosSecure from '../../../hooks/useAxiosSecure'
 
 const MyInventory = () => {
+        const axiosSecure = useAxiosSecure()
+        
+        const {data:plants=[],refetch, isLoading} = useQuery({
+                queryKey: ['plants'],
+                queryFn: async () => {
+                        try {
+                                const {data} = await axiosSecure('/plants/seller')
+                                return data;
+                                
+                        } catch (error) {
+                                console.log(error.response.data)
+                                toast.error(error.response.data)
+                                
+                        }
+                }
+
+        })
+        console.log(plants)
   return (
     <>
       <Helmet>
@@ -61,7 +82,9 @@ const MyInventory = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <PlantDataRow />
+                  {
+                        plants.map(plant => <PlantDataRow plant={plant} refetch={refetch} key={plant._id} />)
+                  }
                 </tbody>
               </table>
             </div>
